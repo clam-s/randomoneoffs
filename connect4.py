@@ -1,3 +1,4 @@
+import re
 from time import sleep as wait
 
 RED = "\033[31m"
@@ -66,21 +67,16 @@ def winCheck(x,y,board): #expand from last entry approach
         coords = range(y-up,y+down+2)
         if board[coords[0]][x] == board[coords[1]][x] == board[coords[2]][x] == board[coords[3]][x] != '-': 
             return True
-    deltay = 4
-    deltax = 4
-    for _ in range(5):
-        if y+deltay > 6 or y+deltay-3 < 0:
-            continue
-        if x+deltax <7 and x+deltax-3 >= 0:
-            print("entry 1")
-            if board[y+deltay][x+deltax] == board[y+deltay-1][x+deltax-1] == board[y+deltay-2][x+deltax-2] == board[y+deltay-3][x+deltax-3] != '-':
-                return True
-        if x - deltax >= 0 and x - deltax + 3 <7:
-            print("entry 2")
-            if board[y+deltay][x-deltax] == board[y+deltay-1][x-deltax+1] == board[y+deltay-2][x-deltax+2] == board[y+deltay-3][x-deltax+3] != '-':
-                return True
-        deltay -= 1
-        deltax -= 1
+    y -=1 
+    for delta in range(-3,1):
+        if y +delta >= 0 and y+delta +3 <=5:
+            if x + delta  >=0 and x + delta + 3 <= 6:
+                if board[y+delta][x+delta] == board[y+delta+1][x+delta+1] == board[y+delta+2][x+delta+2] == board[y+delta+3][x+delta+3] != '-':
+                    return True
+            if x - delta  <=6 and x - delta - 3 >= 0:
+                if board[y+delta][x-delta] == board[y+delta+1][x-delta-1] == board[y+delta+2][x-delta-2] == board[y+delta+3][x-delta-3] != '-':
+                    return True
+                
     return False
 
 
